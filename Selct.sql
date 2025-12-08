@@ -15,4 +15,5 @@ LEFT JOIN texte txt ON txt.id = t.text_id
 LEFT JOIN sollwert_gruppe g ON g.id = t.group_id
 LEFT JOIN gruppen_varianten_sollwerte gvs ON gvs.group_id = g.id
 LEFT JOIN sollwerte sw ON sw.id = gvs.sollwert_id
-LEFT JOIN varianten v ON v.id = sw.variant_id;
+LEFT JOIN varianten v ON v.id = sw.variant_id
+ORDER by t.tag_name;
