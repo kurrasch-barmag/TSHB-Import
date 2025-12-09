@@ -26,7 +26,9 @@ SELECT DISTINCT
     COALESCE(format,'') AS format,
     COALESCE(variant_name,'') AS variant_name,
     NULLIF(text_en,'') AS text_en,
-    text_de, text_fr, text_tr, text_chs
+    text_de, text_fr, text_tr, text_chs,
+    -- Add tagname_numbers column
+    NULLIF(tagname_numbers, '') AS tagname_numbers
 FROM staging_messages
 WHERE tag_name IS NOT NULL;  -- TagnameBit nicht mehr nötig
 
