@@ -19,6 +19,7 @@ SELECT DISTINCT
     TRIM(tag_name) AS original_tag_name,
     message_bit,
     COALESCE(project_number, '') AS project_number,
+    COALESCE(tshb_no, '') AS tshb_no,
     COALESCE(min_value,0)::real AS min_value,
     COALESCE(max_value,0)::real AS max_value,
     unit,
@@ -64,10 +65,17 @@ BEGIN
   ) THEN
     ALTER TABLE tags ADD COLUMN message_bit INT;
   END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema='public' AND table_name='tags' AND column_name='tshb_no'
+  ) THEN
+    ALTER TABLE tags ADD COLUMN tshb_no TEXT;
+  END IF;
 END $$;
 
 -- Insert tags
-INSERT INTO tags(tag_name, original_tag_name, message_bit, project_number, text_id, tag_type)
+INSERT INTO tags(tag_name, original_tag_name, message_bit, project_number, tshb_no, text_id, tag_type)
 SELECT DISTINCT
     s.tag_name,
     s.original_tag_name,
@@ -77,11 +85,19 @@ SELECT DISTINCT
       ELSE NULL
     END AS message_bit,
     s.project_number,
+    s.tshb_no,
     (SELECT id FROM texte t WHERE t.text_en = s.text_en LIMIT 1),
     CASE WHEN s.min_value <> 0 OR s.max_value <> 0 THEN 'measurement' ELSE 'alarm' END
 FROM tmp_staging_snapshot s
 LEFT JOIN tags tg ON tg.tag_name = s.tag_name
-WHERE tg.id IS NULL;
+WHERE tg.id IS NULL
+ON CONFLICT (tag_name) DO UPDATE SET
+    tshb_no = EXCLUDED.tshb_no,
+    original_tag_name = EXCLUDED.original_tag_name,
+    message_bit = EXCLUDED.message_bit,
+    project_number = EXCLUDED.project_number,
+    text_id = EXCLUDED.text_id,
+    tag_type = EXCLUDED.tag_type;
 
 -- Sollwertgruppen
 INSERT INTO sollwert_gruppe(name, description, current_variant_id)

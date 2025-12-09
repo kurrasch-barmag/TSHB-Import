@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS tags (
     original_tag_name TEXT,
     message_bit INT,
     project_number TEXT,                 -- stays as TEXT
+    tshb_no TEXT,                        -- TSHB Nummer aus staging_messages
     text_id INT REFERENCES texte(id) ON DELETE SET NULL,
     group_id INT REFERENCES sollwert_gruppe(id) ON DELETE SET NULL,
     tag_type TEXT NOT NULL,

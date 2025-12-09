@@ -1,6 +1,7 @@
 SELECT DISTINCT
     t.tag_name,
     t.project_number,
+    t.tshb_no,
     txt.text_de,
     txt.text_en,
     g.name AS sollwertgruppe,
