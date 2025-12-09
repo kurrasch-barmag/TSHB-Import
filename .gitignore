@@ -1,0 +1,31 @@
+# Ignore all files in the KNIME directory
+KNIME/*
+
+# Allow the extracted workflow directory
+!KNIME/TSHBImportV2_extracted/
+
+# Ignore all settings files
+KNIME/TSHBImportV2_extracted/**/*.xml
+
+# Allow workflow metadata
+!KNIME/TSHBImportV2_extracted/TSHBImportV2/workflow-metadata.xml
+
+# Ignore temporary or backup files
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Ignore log files
+*.log
+
+# Ignore other unnecessary files
+.DS_Store
+Thumbs.db
+KNIME/TSHBImportV2_extracted/TSHBImportV2/workflow.svg
+TSHBImportV2.knwf
+KNIME/TSHBImportV2_extracted/TSHBImportV2/workflow-metadata.xml
+KNIME/TSHBImportV2_extracted/TSHBImportV2/workflow.knime
+KNIME/TSHBImportV2_extracted/TSHBImportV2/workflowset.meta
+KNIME/TSHBImportV2_extracted/TSHBImportV2/.artifacts/workflow-configuration-representation.json
+KNIME/TSHBImportV2_extracted/TSHBImportV2/.artifacts/workflow-configuration.json
