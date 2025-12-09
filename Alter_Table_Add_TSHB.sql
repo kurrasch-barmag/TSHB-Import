@@ -1,5 +1,6 @@
 -- Alter_Table_Add_TSHB.sql
 -- Fügt die TSHB-Nummer Spalte zur tags Tabelle hinzu
+-- ist temporär notwendig für den Importprozess
 SET search_path TO public;
 
 ----------------------------------------------------------------
