@@ -1,0 +1,39 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Log Files
+*.log
+
+# Database Files
+*.mdf
+*.ldf
+*.bak
+
+# KNIME Workspace
+.metadata/
+.recommenders/
+
+# Build and Output
+/output/
+/temp/
+/tmp/
+
+# Personal Notes
+notes.txt
+TODO.txt
