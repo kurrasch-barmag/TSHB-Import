@@ -1,4 +1,3 @@
-
 -- 02_import_script.sql
 -- Complete import script (single file). Constructs tag_name by appending _<bit> only if bit is numeric (integer).
 -- Keeps project_number as text. Float tolerance = 0.0001
@@ -72,10 +71,17 @@ BEGIN
   ) THEN
     ALTER TABLE tags ADD COLUMN tshb_no TEXT;
   END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema='public' AND table_name='tags' AND column_name='tagname_numbers'
+  ) THEN
+    ALTER TABLE tags ADD COLUMN tagname_numbers TEXT;
+  END IF;
 END $$;
 
 -- Insert tags
-INSERT INTO tags(tag_name, original_tag_name, message_bit, project_number, tshb_no, text_id, tag_type)
+INSERT INTO tags(tag_name, original_tag_name, message_bit, project_number, tshb_no, text_id, tag_type, tagname_numbers)
 SELECT DISTINCT
     s.tag_name,
     s.original_tag_name,
@@ -87,7 +93,8 @@ SELECT DISTINCT
     s.project_number,
     s.tshb_no,
     (SELECT id FROM texte t WHERE t.text_en = s.text_en LIMIT 1),
-    CASE WHEN s.min_value <> 0 OR s.max_value <> 0 THEN 'measurement' ELSE 'alarm' END
+    CASE WHEN s.min_value <> 0 OR s.max_value <> 0 THEN 'measurement' ELSE 'alarm' END,
+    s.tagname_numbers
 FROM tmp_staging_snapshot s
 LEFT JOIN tags tg ON tg.tag_name = s.tag_name
 WHERE tg.id IS NULL
@@ -97,7 +104,8 @@ ON CONFLICT (tag_name) DO UPDATE SET
     message_bit = EXCLUDED.message_bit,
     project_number = EXCLUDED.project_number,
     text_id = EXCLUDED.text_id,
-    tag_type = EXCLUDED.tag_type;
+    tag_type = EXCLUDED.tag_type,
+    tagname_numbers = EXCLUDED.tagname_numbers;
 
 -- Sollwertgruppen
 INSERT INTO sollwert_gruppe(name, description, current_variant_id)
