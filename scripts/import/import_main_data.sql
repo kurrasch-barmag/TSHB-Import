@@ -71,12 +71,10 @@ BEGIN TRY
         GETDATE(),
         SYSTEM_USER
     FROM #StagingData s
+    LEFT JOIN [dbo].[MainData] m ON s.RecordID = m.RecordID
     WHERE s.IsProcessed = 0
       AND s.RecordID IS NOT NULL
-      AND NOT EXISTS (
-          SELECT 1 FROM [dbo].[MainData] m 
-          WHERE m.RecordID = s.RecordID
-      );
+      AND m.RecordID IS NULL;
     
     SET @SuccessfulRecords = @@ROWCOUNT;
     PRINT 'Inserted ' + CAST(@SuccessfulRecords AS VARCHAR(10)) + ' records into MainData';

@@ -42,10 +42,11 @@ CREATE TABLE #StagingData (
     CreatedBy VARCHAR(100) DEFAULT SYSTEM_USER
 );
 
--- Create indexes for better performance
-CREATE INDEX IX_StagingData_ImportBatch ON #StagingData(ImportBatch);
-CREATE INDEX IX_StagingData_IsProcessed ON #StagingData(IsProcessed);
-CREATE INDEX IX_StagingData_RecordID ON #StagingData(RecordID);
+-- Create indexes for better performance (optional for small datasets)
+-- Uncomment these indexes if working with large datasets (>10,000 records)
+-- CREATE INDEX IX_StagingData_ImportBatch ON #StagingData(ImportBatch);
+-- CREATE INDEX IX_StagingData_IsProcessed ON #StagingData(IsProcessed);
+-- CREATE INDEX IX_StagingData_RecordID ON #StagingData(RecordID);
 
 -- Grant permissions (adjust as needed)
 -- GRANT SELECT, INSERT, UPDATE, DELETE ON #StagingData TO [YourRole];

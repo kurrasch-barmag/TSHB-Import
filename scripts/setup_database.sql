@@ -2,6 +2,8 @@
 -- Master Setup Script
 -- Description: Create all database objects in correct order
 -- Usage: Execute once to setup all tables and objects
+-- NOTE: This script uses :r command which is specific to SQL Server Management Studio (SSMS)
+--       For other SQL clients, execute the individual schema files manually in the order shown below
 -- =============================================
 
 SET NOCOUNT ON;
