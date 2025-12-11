@@ -1,0 +1,6 @@
+In die existierende DB (DB Structure.sql) sollen Variablen (tag_name) aus der Tabelle staging_messages importiert werden, die Komponentennummern beinhalten, z.B. Extr01.Hzne2.Temp. 
+Diese sollen in die Datenbank importiert werden, aber generalisiert (Extr##.Hzne#.Temp) in die Tabelle tags geschrieben werden. 
+Die Zahlen, die durch # ersetzt wurden sollen in einer Mappingtabelle zusätzlich mit den ersetzten Zahlen (01;2) und der Auftragsnummer (project_number) gespeichert werden, 
+damit diese später wieder exportiert werden können. Überprüfe die Struktur der DB, ob das beschriebene möglich ist. 
+Ändere die Import.sql entsprechend und auch dass die Texte in den unterschiedlichen Sprachen generalisiert (mit #) in die Tabelle texte eingetragen werden.
+Beachte insbesondere auch die TEMP Tabelle. Zum Schluss gebe mir eine angepasste SELECT Abfrage aus (Select.sql).
